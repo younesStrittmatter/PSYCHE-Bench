@@ -1,0 +1,66 @@
+{
+  "paper_id": "cox2017information",
+  "experiments": [
+    {
+      "experiment_id": "exp1",
+      "targets": {
+        "participant": [
+          {
+            "type": "count_unique",
+            "value": 462,
+            "where": null,
+            "per": null
+          }
+        ],
+        "block": [
+          {
+            "type": "count_unique",
+            ""
+          }
+        ],
+        "trial": [
+          {
+            "type": "count_unique",
+            "value":
+            "where":
+            "per": [
+              "participant"
+            ]
+          }
+        ],
+        "age": [
+          {
+            "type": "mean",
+            "value":
+            "where":
+            "per":
+          },
+          {
+            "type": "sd",
+            "value":
+            "where":
+            "per":
+          }
+        ],
+        "gender": [
+        ],
+        "accuracy": [
+          {
+
+          },
+          {
+
+          }
+        ]
+      }
+    },
+    {
+      "experiment_id": "exp2",
+      "targets": {
+
+        ]
+      }
+    }
+
+  ]
+}
