@@ -7,33 +7,60 @@
         "participant": [
           {
             "type": "count_unique",
-            "value":
-            "where":
-            "per":
+            "value": 80,
+            "where": null,
+            "per": null
           },
+          {
+            "type": "count_unique",
+            "value": 11,
+            "where": {
+              "gender": "male"
+            },
+            "per": null
+          }
         ],
         "trial": [
           {
             "type": "count_unique",
-            "value":
-            "where":
+            "value": 264,
+            "where": null,
+            "per": [
+              "participant"
+            ]
+          },
+          {
+            "type": "count_unique",
+            "value": 44,
+            "where": null,
+            "per":[
+              "participant", "block"
+            ]
+          }
+        ],
+        "block": [
+          {
+            "type": "count_unique",
+            "value": 6,
+            "where": null,
             "per": [
               "participant"
             ]
           }
+
         ],
         "age": [
           {
             "type": "mean",
-            "value":
-            "where":
-            "per":
+            "value": 19.7,
+            "where": null,
+            "per": null
           },
           {
-            "type": "sd",
-            "value":
-            "where":
-            "per":
+            "type": "range",
+            "value": [18, 31],
+            "where": null,
+            "per": null
           }
         ],
         "gender": [
