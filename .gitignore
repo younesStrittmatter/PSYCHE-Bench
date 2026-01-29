@@ -1,2 +1,4 @@
 .venv
 _legacy
+.DS_Store
+*/.DS_Store
