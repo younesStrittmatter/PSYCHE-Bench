@@ -47,7 +47,7 @@
         ],
         "gender": [
         ],
-        "accuracy": [
+        "reward": [
           {
             "type": "mean",
             "value": 0.6825,
