@@ -1,0 +1,31 @@
+{
+  "paper_id": "badham2017deficits",
+  "experiments": [
+    {
+      "experiment_id": "exp1a",
+      "targets": {
+        "participant": [
+          {
+            "type": "count_unique_approx",
+            "value": 200,
+            "where": null,
+            "per": null
+          }
+        ]
+      }
+    },
+    {
+      "experiment_id": "exp1b",
+      "targets": {
+        "participant": [
+          {
+            "type": "count_unique_approx",
+            "value": 200,
+            "where": null,
+            "per": null
+          }
+        ]
+      }
+    }
+  ]
+}

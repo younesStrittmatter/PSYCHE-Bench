@@ -1,4 +1,4 @@
-,Unnamed: 0,participant,task,trial,choice,reward,x0,x1,x2,x3,target,time,is_training
+1,Unnamed: 0,participant,task,trial,choice,reward,x0,x1,x2,x3,target,time,is_training
 0,0,0,0,0,1,1.0,-1.33,-2.75,0.97,-1.13,1,136894.0,True
 1,1,0,0,1,1,1.0,-1.3,2.63,-2.45,-0.65,1,152402.0,True
 2,2,0,0,2,0,1.0,0.81,-0.58,-0.09,0.93,0,164644.0,True

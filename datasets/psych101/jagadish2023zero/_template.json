@@ -1,0 +1,60 @@
+{
+  "paper_id": "badham2017deficits",
+  "experiments": [
+    {
+      "experiment_id": "exp1",
+      "targets": {
+        "participant": [
+          {
+            "type": "count_unique",
+            "value":
+            "where":
+            "per":
+          },
+        ],
+        "trial": [
+          {
+            "type": "count_unique",
+            "value":
+            "where":
+            "per": [
+              "participant"
+            ]
+          }
+        ],
+        "age": [
+          {
+            "type": "mean",
+            "value":
+            "where":
+            "per":
+          },
+          {
+            "type": "sd",
+            "value":
+            "where":
+            "per":
+          }
+        ],
+        "gender": [
+        ],
+        "accuracy": [
+          {
+
+          },
+          {
+
+          }
+        ]
+      }
+    },
+    {
+      "experiment_id": "exp2",
+      "targets": {
+
+        ]
+      }
+    }
+
+  ]
+}
