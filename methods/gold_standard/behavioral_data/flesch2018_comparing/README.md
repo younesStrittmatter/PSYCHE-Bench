@@ -1,0 +1,1240 @@
+exp1.csv from:
+
+Flesch, T., Balaguer, J., Dekker, R., Nili, H., & Summerfield, C. (2018). Comparing continual task learning in minds and machines. Proceedings of the National Academy of Sciences, 115(44), E10313-E10322.
+
+## Data quality checklist
+
+| Paper | Task |
+|:----------|:-------------:|
+| README.md with list of original data sources in APA style format | ✔️ |
+| Example prompt in README.md | ✔️ |
+| main folder name correct syntax | ✔️ |
+| preprocess_data.py exists | ✔️ |
+| generate_prompts.py exists | ✔️ |
+| prompts.jsonl exists | ✔️ |
+| expN.csv exist | ✔️ |
+| original_data/ exists | ✔️ |
+| expN.csv follows the template | ✔️ |
+| verify that instructions match the actual experiment | ✔️ |
+| Discrete choice options are randomized for each participant | ✔️ |
+
+### TODO
+
+## Example prompt
+
+```
+You are going to plant different types of trees in two different gardens: (0): North and (1): South.
+The trees look different from each other regarding their leafiness and branchiness.
+There are 5 levels of leafiness (0,1,2,3,4) and 5 levels of branchiness (0,1,2,3,4).
+Your task is to learn which type of tree grows best in each garden. If you "accept" to plant the tree and your answer is correct, you will be rewarded with points, otherwise you will lose some points. If you "reject" to plan the tree, you will not be rewarded (0 point). 
+There will be 600 trials in total divided into two blocks (400 trials for training, and 200 trials for testing). During training, there will be feedbacks on everytrial about your decisions (as points). During testing, there will be no feedbacks for your decision.
+In addition, you are not allowed to choose the garden, and you can only decide whether to "accept" (option T) or "reject" (option 5) to plan each tree given you are already in a specific garden.
+
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {T} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {T} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {T} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {T} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {5} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {5} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {T} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {5}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {T}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {T}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {5}.
+You are going to plant different types of trees in two different gardens: (0): North and (1): South.
+The trees look different from each other regarding their leafiness and branchiness.
+There are 5 levels of leafiness (0,1,2,3,4) and 5 levels of branchiness (0,1,2,3,4).
+Your task is to learn which type of tree grows best in each garden. If you "accept" to plant the tree and your answer is correct, you will be rewarded with points, otherwise you will lose some points. If you "reject" to plan the tree, you will not be rewarded (0 point). 
+There will be 600 trials in total divided into two blocks (400 trials for training, and 200 trials for testing). During training, there will be feedbacks on everytrial about your decisions (as points). During testing, there will be no feedbacks for your decision.
+In addition, you are not allowed to choose the garden, and you can only decide whether to "accept" (option P) or "reject" (option 8) to plan each tree given you are already in a specific garden.
+
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {P} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {8} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {P} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {8} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {8} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {8} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {8} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {8} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {P} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {P} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got -25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got 25 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8} and got 0 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8} and got 50 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8} and got -25 points.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8} and got -25 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8} and got -50 points.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8} and got -50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P} and got 25 points.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P} and got 50 points.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P} and got 25 points.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8} and got 0 points.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 2 of leafiness  and level 1 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 3 of leafiness  and level 4 of branchiness. You selected option {8}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 1 of branchiness. You selected option {P}.
+- In garden (0), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 4 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 4 of leafiness  and level 2 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 2 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 3 of leafiness  and level 3 of branchiness. You selected option {P}.
+- In garden (1), you get a tree with level 1 of leafiness  and level 0 of branchiness. You selected option {8}.
+- In garden (1), you get a tree with level 0 of leafiness  and level 3 of branchiness. You selected option {P}.
+```

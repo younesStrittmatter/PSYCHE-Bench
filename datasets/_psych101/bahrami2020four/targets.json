@@ -1,0 +1,18 @@
+{
+  "paper_id": "bahrami2020four",
+  "experiments": [
+    {
+      "experiment_id": "exp1",
+      "targets": {
+        "participant": [
+          {
+            "type": "count_unique",
+            "value": 975,
+            "where": null,
+            "per": null
+          }
+        ]
+      }
+    }
+  ]
+}

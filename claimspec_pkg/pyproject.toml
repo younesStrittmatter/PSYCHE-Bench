@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claimspec"
+version = "0.1.0"
+description = "A claim specification language for verifiable statements about datasets"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"

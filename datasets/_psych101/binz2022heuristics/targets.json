@@ -1,0 +1,75 @@
+{
+  "paper_id": "binz2022heuristics",
+  "experiments": [
+    {
+      "experiment_id": "exp1",
+      "targets": {
+        "participant": [
+          {
+            "type": "count_unique",
+            "value": 28,
+            "where": null,
+            "per": null
+          },
+          {
+            "type": "count_unique",
+            "value": 23,
+            "where": {
+              "gender": "female"
+            },
+            "per": null
+          }
+        ],
+        "trial": [
+          {
+            "type": "count_unique",
+            "value": 10,
+            "where": null,
+            "per": [
+              "task",
+              "participant"
+            ]
+          }
+        ],
+        "age": [
+          {
+            "type": "mean",
+            "value": 22.36,
+            "where": null,
+            "per": null
+          },
+          {
+            "type": "sd",
+            "value": 5.65,
+            "where": null,
+            "per": null
+          }
+        ],
+        "gender": [
+        ],
+        "reward": [
+          {
+            "type": "mean",
+            "value": 0.6825,
+            "where": null,
+            "per": null
+          },
+          {
+            "type": "sd",
+            "value": 0.0755,
+            "where": null,
+            "per": null
+          }
+        ]
+      }
+    },
+    {
+      "experiment_id": "exp2",
+      "targets": {}
+    },
+    {
+      "experiment_id": "exp3",
+      "targets": {}
+    }
+  ]
+}
