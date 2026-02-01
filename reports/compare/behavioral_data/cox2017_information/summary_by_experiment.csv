@@ -1,0 +1,3 @@
+paper,experiment,dataset,n_claims,coverage_computable_n,coverage_computable_rate,correctness_pass_n,correctness_pass_rate,compare_ok_n,compare_ok_rate
+cox2017_information,exp1,gold_standard,1,1,1.0,1,1.0,1,1.0
+cox2017_information,exp1,original_fair,1,1,1.0,0,0.0,1,1.0

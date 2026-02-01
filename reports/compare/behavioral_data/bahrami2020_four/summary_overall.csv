@@ -1,0 +1,3 @@
+paper,dataset,n_claims,coverage_computable_n,coverage_computable_rate,correctness_pass_n,correctness_pass_rate,compare_ok_n,compare_ok_rate
+bahrami2020_four,gold_standard,2,2,1.0,1,0.5,2,1.0
+bahrami2020_four,original_fair,2,2,1.0,0,0.0,2,1.0

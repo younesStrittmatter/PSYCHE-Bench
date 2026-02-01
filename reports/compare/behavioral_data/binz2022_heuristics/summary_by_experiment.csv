@@ -1,0 +1,7 @@
+paper,experiment,dataset,n_claims,coverage_computable_n,coverage_computable_rate,correctness_pass_n,correctness_pass_rate,compare_ok_n,compare_ok_rate
+binz2022_heuristics,exp1,gold_standard,3,3,1.0,3,1.0,3,1.0
+binz2022_heuristics,exp1,original_fair,3,3,1.0,3,1.0,3,1.0
+binz2022_heuristics,exp2,gold_standard,3,3,1.0,3,1.0,3,1.0
+binz2022_heuristics,exp2,original_fair,3,3,1.0,3,1.0,3,1.0
+binz2022_heuristics,exp3,gold_standard,3,3,1.0,3,1.0,3,1.0
+binz2022_heuristics,exp3,original_fair,3,3,1.0,3,1.0,3,1.0
